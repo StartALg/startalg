@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <style>
+        /* General styles */
+        body {
+            background-color: #f8f9fa;
+            color: #151515; /* Text color */
+        }
+
+        .profile-header {
+            margin-bottom: 20px;
+        }
+
+        .profile-image {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+        }
+
+        /* Styling for tabs */
+        .nav-tabs .nav-link {
+            color: #151515;
+        }
+
+        .nav-tabs .nav-link.active {
+            background-color: #ffc451; /* Active tab background color */
+            color: #151515; /* Active tab text color */
+        }
+
+        /* Sidebar (conversations list) */
+        .sidebar {
+            width: 100%; /* Allow full width on smaller screens */
+            max-width: 100%; /* Restrict to 100% */
+            background-color: #f7f7f7;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        /* Conversation item in sidebar */
+        .conversation-item {
+            padding: 10px;
+            border-bottom: 1px solid #e7e7e7;
+            cursor: pointer;
+        }
+
+        .conversation-item:hover {
+            background-color: #e7e7e7;
+        }
+
+        /* Conversation item name */
+        .conversation-item .name {
+            font-weight: bold;
+        }
+
+        /* Chat window (messages display) */
+        .chat-window {
+            width: 100%; /* Allow full width on smaller screens */
+            max-width: 100%; /* Restrict to 100% */
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* Message in chat window */
+        .message {
+            margin-bottom: 10px;
+        }
+
+        /* Sender of the message */
+        .message-sender {
+            font-weight: bold;
+        }
+
+        /* Profile image in conversation items */
+        .profile-img {
+            width: 40px; /* Maintain a small profile image */
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        /* Styles for responsive design */
+        @media (max-width: 767px) {
+            /* Make header and image smaller */
+            .profile-header {
+                text-align: center;
+            }
+
+            .profile-image {
+                width: 100px;
+                height: 100px;
+                margin: 0 auto 10px;
+            }
+
+            .profile-header h1 {
+                font-size: 24px;
+            }
+
+            /* Adjust tab navigation for smaller screens */
+            .nav-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-link {
+                width: 100%; /* Full width on smaller screens */
+                text-align: center;
+            }
+
+            /* Adjust container layout */
+            .container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Profile Header -->
+        <div class="row profile-header">
+            <div class="col-md-4 text-center">
+                <img src="assets/img/kai.jpg" alt="Profile Picture" class="profile-image">
+            </div>
+            <div class="col-md-8">
+                <h1>Example</h1>
+                <p>This is an example.</p>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages" type="button" role="tab" aria-controls="messages" aria-selected="true">
+                    <i class="fas fa-envelope"></i> Messages
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="products-tab" data-bs-toggle="tab" data-bs-target="#products" type="button" role="tab" aria-controls="products" aria-selected="false">
+                    <i class="fas fa-box"></i> My Products
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="consultation-tab" data-bs-toggle="tab" data-bs-target="#consultation" type="button" role="tab" aria-controls="consultation" aria-selected="false">
+                    <i class="fas fa-comments"></i> Consultation
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">
+                    <i class="fas fa-cog"></i> Settings
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="payment-tab" data-bs-toggle="tab" data-bs-target="#payment" type="button" role="tab" aria-controls="payment" aria-selected="false">
+                    <i class="fas fa-credit-card"></i> Payment
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" onclick="goBack()">Go Back</button>
+            </li>
+            
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="logout-tab" data-bs-toggle="tab" data-bs-target="#logout" type="button" role="tab" aria-controls="logout" aria-selected="false">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="profileTabsContent">
+            <!-- Messages Tab -->
+            <div class="tab-pane fade show active" id="messages" role="tabpanel" aria-labelledby="messages-tab">
+                <h2>Messages</h2>
+                <p>This is the messages section where you can include your messages or communications.</p>
+                
+                <!-- Sidebar and Chat Window -->
+                <div class="d-md-flex">
+                    <!-- Sidebar -->
+                    <div class="sidebar col-md-4">
+                        <div class="conversation-item" onclick="openConversation(1)">
+                            <div class="name">Rami</div>
+                            <img src="assets/img/cover2.jpg" alt="John Doe" class="profile-img">
+                        </div>
+                        <div class="conversation-item" onclick="openConversation(2)">
+                            <div class="name">Sami</div>
+                            <img src="assets/img/cover2.jpg" alt="John Doe" class="profile-img">
+                        </div>
+                        <!-- Add more conversation items here -->
+                    </div>
+                    
+                    
+                </div>
+
+            </div>
+
+            <!-- Products Tab -->
+<div class="tab-pane fade" id="products" role="tabpanel" aria-labelledby="products-tab">
+
+    <!-- Categories Tabs -->
+    <ul class="nav nav-tabs" id="productCategoryTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="category1-tab" data-bs-toggle="tab" data-bs-target="#category1" type="button" role="tab" aria-controls="category1" aria-selected="true">Category 1</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="category2-tab" data-bs-toggle="tab" data-bs-target="#category2" type="button" role="tab" aria-controls="category2" aria-selected="false">Category 2</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="category3-tab" data-bs-toggle="tab" data-bs-target="#category2" type="button" role="tab" aria-controls="category2" aria-selected="false">Category 3</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="category4-tab" data-bs-toggle="tab" data-bs-target="#category2" type="button" role="tab" aria-controls="category2" aria-selected="false">Category 4</button>
+        </li>
+        <!-- Add more category tabs as needed -->
+    </ul>
+
+    <!-- Categories Content -->
+        <div class="tab-content" id="productCategoryTabsContent">
+        <!-- Category 1 Tab -->
+        <div class="tab-pane fade show active" id="category1" role="tabpanel" aria-labelledby="category1-tab">
+            <!-- Add product cards for Category 1 -->
+            
+            <div class="row">
+                <!-- Product Card 1 -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="assets/img/cover1.jpg" class="card-img-top" alt="Product 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 1</h5>
+                            <p class="card-text">Description of Product 1.</p>
+                            <p class="card-text"><strong>Price: $20</strong></p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Product Card 2 -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="assets/img/kai.jpg" class="card-img-top" alt="Product 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 2</h5>
+                            <p class="card-text">Description of Product 2.</p>
+                            <p class="card-text"><strong>Price: $30</strong></p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Product Card 3 -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="assets/img/kai.jpg" class="card-img-top" alt="Product 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 3</h5>
+                            <p class="card-text">Description of Product 3.</p>
+                            <p class="card-text"><strong>Price: $40</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <!-- Add more product cards as needed -->
+            </div>
+        </div>
+
+        <!-- Category 2 Tab -->
+        <div class="tab-pane fade" id="category2" role="tabpanel" aria-labelledby="category2-tab">
+            <div class="row">
+                <!-- Product Card 1 -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="assets/img/cover1.jpg" class="card-img-top" alt="Product 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 1</h5>
+                            <p class="card-text">Description of Product 1.</p>
+                            <p class="card-text"><strong>Price: $20</strong></p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Product Card 2 -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="assets/img/kai.jpg" class="card-img-top" alt="Product 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 2</h5>
+                            <p class="card-text">Description of Product 2.</p>
+                            <p class="card-text"><strong>Price: $30</strong></p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Product Card 3 -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="assets/img/kai.jpg" class="card-img-top" alt="Product 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 3</h5>
+                            <p class="card-text">Description of Product 3.</p>
+                            <p class="card-text"><strong>Price: $40</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Category 3 Tab -->
+        <div class="tab-pane fade" id="category3" role="tabpanel" aria-labelledby="category2-tab">
+            <div class="row">
+                <!-- Product Card 1 -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="assets/img/cover1.jpg" class="card-img-top" alt="Product 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 1</h5>
+                            <p class="card-text">Description of Product 1.</p>
+                            <p class="card-text"><strong>Price: $20</strong></p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Product Card 2 -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="assets/img/kai.jpg" class="card-img-top" alt="Product 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 2</h5>
+                            <p class="card-text">Description of Product 2.</p>
+                            <p class="card-text"><strong>Price: $30</strong></p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Product Card 3 -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="assets/img/kai.jpg" class="card-img-top" alt="Product 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 3</h5>
+                            <p class="card-text">Description of Product 3.</p>
+                            <p class="card-text"><strong>Price: $40</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Category 3 Tab -->
+        <div class="tab-pane fade" id="category4" role="tabpanel" aria-labelledby="category2-tab">
+            <div class="row">
+                <!-- Product Card 1 -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="assets/img/cover1.jpg" class="card-img-top" alt="Product 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 1</h5>
+                            <p class="card-text">Description of Product 1.</p>
+                            <p class="card-text"><strong>Price: $20</strong></p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Product Card 2 -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="assets/img/kai.jpg" class="card-img-top" alt="Product 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 2</h5>
+                            <p class="card-text">Description of Product 2.</p>
+                            <p class="card-text"><strong>Price: $30</strong></p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Product Card 3 -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="assets/img/kai.jpg" class="card-img-top" alt="Product 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 3</h5>
+                            <p class="card-text">Description of Product 3.</p>
+                            <p class="card-text"><strong>Price: $40</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Add more category tabs and content as needed -->
+    </div>
+</div>
+            <!-- Add more product categories as needed -->
+            <!-- Add more tab panes as needed -->
+
+            <!-- Consultation Tab -->
+            <div class="tab-pane fade" id="consultation" role="tabpanel" aria-labelledby="consultation-tab">
+                <h2>Consultation</h2>
+                <p>This is the consultation section where you can include your consultation-related content.</p>
+                <!-- Add consultation-related content here -->
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                <h2>Settings</h2>
+                <p>This is the settings section where you can include your settings-related content.</p>
+                <!-- Add settings-related content here -->
+            </div>
+
+            <!-- Payment Tab -->
+            <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
+                <h2>Payment</h2>
+                <p>This is the payment section where you can include your payment-related content.</p>
+                <!-- Add payment-related content here -->
+            </div>
+
+            <!-- Logout Tab -->
+            <div class="tab-pane fade" id="logout" role="tabpanel" aria-labelledby="logout-tab">
+                <h2>Logout</h2>
+                <p>This is the logout section where you can include your logout-related content.</p>
+                <!-- Add logout-related content here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Add JavaScript functionality here (e.g. event listeners)
+        function goBack() {
+            window.history.back();
+        }
+        
+        // Add other JavaScript functions as needed
+    </script>
+</body>
+
+</html>
